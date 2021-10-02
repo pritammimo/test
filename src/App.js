@@ -1,24 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { useEffect } from "react";
+import "react-toastify/dist/ReactToastify.css";
+import { getStorage } from "./helpers/apiHelper";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import Header from "./pages/share_module/Header/Header";
+import Footer from "./pages/share_module/Footer/Footer";
+import HomePage from "./pages/Home_page/HomePage";
+import Addusers from "./pages/AddUsers/Add-users";
+import PrivateRoute from "./pages/RouteWrapper/PrivateRoute";
+import "react-toastify/dist/ReactToastify.css";
+import Login from "./pages/Login/Login";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router basename={"/"}>
+        <main className="d-flex flex-column min-vh-100">
+          <Header />
+          <Switch>
+            {/* <PrivateRoute exact path="/home" component={HomePage} /> */}
+            {/* <PrivateRoute exact path="/addusers" component={Addusers} /> */}
+            <Route exact path="/home" component={HomePage} />
+            <Route exact path="/addusers" component={Addusers} />
+            {/* <Route
+            exact
+            path="/"
+            render={(props) =>
+              !getStorage("token") ? (
+                <Login {...props} />
+              ) : (
+                <Redirect to={"/dashboard"} />
+              )
+            }
+          /> */}
+            <Route exact path="/" component={Login} />
+          </Switch>
+          <Footer />
+        </main>
+      </Router>
+      <ToastContainer />
+    </>
   );
 }
 
